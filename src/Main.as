@@ -7,7 +7,7 @@ package
     public function Main()
     {
       super();
-      var l:LSystem = new LSystem("YF", "F", "YF+XF+Y", "XF-YF-X", 60)
+      var l:LSystem = new LSystem("F", "F-F++F-F", "", "", 60, 8)
       this.addChild(l)
       l.run();
     }
