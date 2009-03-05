@@ -23,7 +23,6 @@
 </compiler>
 <applications>
 <application path="Main.as"/>
-<application path="LSystem.as"/>
 </applications>
 <modules/>
 <buildCSSFiles/>

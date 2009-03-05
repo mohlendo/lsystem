@@ -1,9 +1,8 @@
 package {
   import flash.display.Sprite;
-  import flash.events.Event;
   import flash.geom.Point;
 
-  public class LSystem extends Sprite
+  public class LSystem
   {
     private var turtle:Turtle;
     
@@ -14,23 +13,18 @@ package {
     private var _angle:Number;
     private var _order:Number;
     
-    private var processingString:Array = new Array();
-    private var step:Number;    
+    private var finalPath:Array = new Array();   
     
     public function LSystem(atom:String, fStr:String, xStr:String, 
-                   yStr:String, angle:Number, order:Number ) {
+                   yStr:String, angle:Number, order:Number, sprite:Sprite ) {
       _atom  = atom;
       _fStr  = fStr;
       _xStr  = xStr;
       _yStr  = yStr;
       _angle = angle;
       _order = order;
-      this.processingString.push(atom);
-      this.step = _order;
-      this.x=100;
-      this.y=100;
-      
-      turtle = new Turtle(new Point(0,0),0,0x000000,0.5,this);
+      produceString(this._atom,_order,true);      
+      turtle = new Turtle(new Point(0,0),0,0x000000,0.5,sprite);
     }
  
     public function get atom():String { return _atom; }
@@ -39,61 +33,50 @@ package {
     public function get yStr():String { return _yStr; }
     public function get angle():Number { return _angle; }
     
-    public function run():void {
-      this.addEventListener(Event.ENTER_FRAME, nextStep);            
-    }
     
-    private function nextStep(event:Event):void {
-        var s = this.processingString.pop();
-        for(var i:uint = 0; i < s.length; i++) {
-          switch (s.charAt(i)) {
-            case '+':
+    
+    public function iterate(iterationSteps:Number = 1):Boolean {
+      if(iterationSteps <= 0 ) {
+        iterationSteps = finalPath.length-1;
+        if(iterationSteps==0) {
+          return false;
+        }
+      }
+      for (var i:uint=0;i<iterationSteps&&finalPath.length >= 0;i++) {
+        if(finalPath.length >= 0) {
+          switch (finalPath.pop()) {
+            case 1:
               turtle.turn(degToRad(this.angle));
             break;
-            case '-':
+            case -1:
               turtle.turn(-degToRad(this.angle));
             break;
-            case 'F':
-              if(step > 0) {
-                      this.processingString.push(this.fStr);
-                      step = step -1;
-                      return;
-              } else {
-                      turtle.forward(1, true);
-              }
+            case 0:
+              turtle.forward(2, true);
             break;
-            case 'X':
-              if(step > 0) {
-                      this.processingString.push(this.xStr);
-                      this.step = step - 1;
-                      return;
-              }
-            break;
-            case 'Y':
-              if(step > 0) {
-                this.processingString.push(this.yStr);
-                this.step = step - 1;
-              }
-            break;
-          }
+          }        
         }
-           
+      }
+      return true;      
     }
-    
+        
     private function produceString(string:String, order:uint, isVisible:Boolean):void {
       for(var i:uint = 0; i < string.length; i++) {
         switch (string.charAt(i)) {
           case '+':
-            turtle.turn(degToRad(this.angle));
+            //turtle.turn(degToRad(this.angle));
+            finalPath.push(1);
           break;
           case '-':
-            turtle.turn(-degToRad(this.angle));
+            //turtle.turn(-degToRad(this.angle));
+            finalPath.push(-1);
           break;
           case 'F':
             if(order > 0) {
                     produceString(this.fStr, order - 1, isVisible);
             } else {
-                    turtle.forward(1, isVisible);
+                    //turtle.forward(1, isVisible);
+                    finalPath.push(0);
             }
           break;
           case 'X':
