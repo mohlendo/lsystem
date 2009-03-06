@@ -11,6 +11,7 @@ package
     private var color:uint;
     private var lineThickness:uint;
     private var sprite:Sprite;
+    private var stateStack:Array;
  
  
     // curPos is the current position of the turtle
@@ -25,6 +26,7 @@ package
       color = _color;
       lineThickness = _lt;
       sprite = _sprite;
+      stateStack = new Array();
  
       resetTurtle();
     }
@@ -53,6 +55,26 @@ package
         sprite.graphics.moveTo(curPos.x, curPos.y);
       }
     }
+    
+    public function saveTurtle():void {
+      var curState:Object = new Object;
+      curState.curPos = new Point(curPos.x, curPos.y);
+      curState.curDirRad = curDirRad;
+ 
+      stateStack.push(curState);
+    }
+ 
+    public function restoreTurtle():void {
+      if(stateStack.length > 0) {
+        var curState:Object = stateStack.pop();
+ 
+        curPos.x = curState.curPos.x;
+        curPos.y = curState.curPos.y;
+        curDirRad = curState.curDirRad;
+ 
+        sprite.graphics.moveTo(curPos.x, curPos.y);
+      }
+    }
  
     // Reset the turtle
     public function resetTurtle():void {
@@ -61,6 +83,7 @@ package
       curPos.y = curPosOriginal.y;
       sprite.graphics.moveTo(curPos.x, curPos.y);
     }   
+    
  
     private function getLineAngleRad(deltaX:Number, deltaY:Number):Number {
       return Math.atan2(deltaY, deltaX);

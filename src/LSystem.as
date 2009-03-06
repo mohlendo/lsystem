@@ -7,7 +7,7 @@ package {
     private var turtle:Turtle;
     
     private var _atom:String;
-    private var _fStr:String;
+    private var _fProductions:Array;
     private var _xStr:String;
     private var _yStr:String;
     private var _angle:Number;
@@ -15,20 +15,20 @@ package {
     
     private var finalPath:Array = new Array();   
     
-    public function LSystem(atom:String, fStr:String, xStr:String, 
+    public function LSystem(atom:String, fProductions:Array, xStr:String, 
                    yStr:String, angle:Number, order:Number, sprite:Sprite ) {
       _atom  = atom;
-      _fStr  = fStr;
+      _fProductions  = fProductions;
       _xStr  = xStr;
       _yStr  = yStr;
       _angle = angle;
       _order = order;
-      produceString(this._atom,_order,true);      
-      turtle = new Turtle(new Point(0,0),0,0x000000,0.5,sprite);
+      produceString(this._atom,_order);      
+      turtle = new Turtle(new Point(100,150),degToRad(-85),0x000000,0.5,sprite);
     }
  
     public function get atom():String { return _atom; }
-    public function get fStr():String { return _fStr; }
+    public function get fProductions():Array { return _fProductions; }
     public function get xStr():String { return _xStr; }
     public function get yStr():String { return _yStr; }
     public function get angle():Number { return _angle; }
@@ -52,7 +52,13 @@ package {
               turtle.turn(-degToRad(this.angle));
             break;
             case 0:
-              turtle.forward(2, true);
+              turtle.forward(0.5, true);
+            break;
+            case 2:
+              turtle.saveTurtle();
+            break;
+            case -2:
+              turtle.restoreTurtle();
             break;
           }        
         }
@@ -60,7 +66,7 @@ package {
       return true;      
     }
         
-    private function produceString(string:String, order:uint, isVisible:Boolean):void {
+    private function produceString(string:String, order:uint):void {
       for(var i:uint = 0; i < string.length; i++) {
         switch (string.charAt(i)) {
           case '+':
@@ -73,7 +79,10 @@ package {
           break;
           case 'F':
             if(order > 0) {
-                    produceString(this.fStr, order - 1, isVisible);
+              var randomNo:uint = Math.random() * (fProductions.length);
+              var fStr:String = fProductions[randomNo];
+              produceString(fStr, order - 1);
+            
             } else {
                     //turtle.forward(1, isVisible);
                     finalPath.push(0);
@@ -81,11 +90,17 @@ package {
           break;
           case 'X':
             if(order > 0)
-                    produceString(this.xStr, order - 1, isVisible);
+                    produceString(this.xStr, order - 1);
           break;
           case 'Y':
             if(order > 0)
-                    produceString(this.yStr, order - 1, isVisible);
+                    produceString(this.yStr, order - 1);
+          break;
+          case '[':
+            finalPath.push(2);
+          break;
+          case ']':
+            finalPath.push(-2);
           break;
         }
       }
@@ -100,8 +115,8 @@ package {
       return Point.distance(pt1, pt2);
     }
  
-    private function degToRad(deg:uint):Number {
-      return deg * (Math.PI / 180);
+    private function degToRad(deg:int):Number {
+      return 2*Math.PI/360 * deg;;
     }
   }
 }

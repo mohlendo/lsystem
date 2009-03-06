@@ -5,7 +5,7 @@ package
 
   public class Main extends Sprite
   {
-    var l:LSystem;
+    private var l:LSystem;
     public function Main()
     {
       x=200;
@@ -18,13 +18,22 @@ package
       //Hilbert Kurve
       //l = new LSystem("X", "F", "-YF+XFX+FY-", "+XF-YFY-FX+", 90,5, this);
       //Drachen Kurve
-      l = new LSystem("X", "F", "X+YF+", "-FX-Y", 90,12, this);
+      //l = new LSystem("X", "F", "X+YF+", "-FX-Y", 90,12, this);
       //SierpinskiArrowheadSP
       //l = new LSystem("YF", "F", "YF+XF+Y", "XF-YF-X", 60,8, this);      
+      //Levy C curve
+      //l = new LSystem("F","+F--F+","","",45,12,this);
+      //l = new LSystem("X","FF","F-[[X]+X]+F[+FX]-X","",22, 6, this);
+      var productions:Array = new Array();
+      /*productions.push("FF-[-F+F+F]+[+F-F-F]");
+      productions.push("FF-[-F+F][FF]+[+F-F]");
+      l = new LSystem("X", productions, "YYYYF", "", 22,4, this);*/
+      productions.push("FF");
+      l = new LSystem("X",productions,"F[+X]F[-X]+F","",20,7,this);
       this.addEventListener(Event.ENTER_FRAME,me); 
       
     }
-    function me(e:Event):void {
+    private function me(e:Event):void {
           if(!l.iterate(1000)) {
             this.removeEventListener(Event.ENTER_FRAME,me);
           }
