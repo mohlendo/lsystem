@@ -24,7 +24,7 @@ package {
       _angle = angle;
       _order = order;
       produceString(this._atom,_order);      
-      turtle = new Turtle(new Point(100,150),degToRad(-85),0x000000,0.5,sprite);
+      turtle = new Turtle(new Point(100,150),degToRad(0),0x000000,0.5,sprite);
     }
  
     public function get atom():String { return _atom; }
@@ -115,7 +115,7 @@ package {
       return Point.distance(pt1, pt2);
     }
  
-    private function degToRad(deg:int):Number {
+    private function degToRad(deg:Number):Number {
       return 2*Math.PI/360 * deg;;
     }
   }

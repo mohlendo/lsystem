@@ -60,7 +60,6 @@ package
       var curState:Object = new Object;
       curState.curPos = new Point(curPos.x, curPos.y);
       curState.curDirRad = curDirRad;
- 
       stateStack.push(curState);
     }
  
