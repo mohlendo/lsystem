@@ -24,7 +24,6 @@ package
       _yStr = yStr;
       _angle = angle;
       _order = order;
-<<<<<<< HEAD:src/LSystem.as
       turtle = new Turtle(new Point(-100, 100), degToRad(-85), 0x659D32, 0.5, sprite);
       produceString(this._atom, _order);
       finalPath.position = 0;
@@ -47,11 +46,7 @@ package
 
     public function get yStr():String
     {
-      return _yStr;
-=======
-      produceString(this._atom,_order);      
-      turtle = new Turtle(new Point(100,150),degToRad(0),0x000000,0.5,sprite);
->>>>>>> a2e833e3939711ba7f67443ebe8d4d665ccc0021:src/LSystem.as
+      return _yStr;  
     }
 
     public function get angle():Number
@@ -163,17 +158,10 @@ package
     {
       return Point.distance(pt1, pt2);
     }
-<<<<<<< HEAD:src/LSystem.as
 
     private function degToRad(deg:Number):Number
     {
       return 2.0 * Math.PI / 360.0 * deg;
-      ;
-=======
- 
-    private function degToRad(deg:Number):Number {
-      return 2*Math.PI/360 * deg;;
->>>>>>> a2e833e3939711ba7f67443ebe8d4d665ccc0021:src/LSystem.as
     }
   }
 }
