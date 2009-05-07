@@ -8,51 +8,50 @@ package
   public class LSystem
   {
     private var turtle:Turtle;
-    private var _atom:String;
-    private var _fProductions:Array;
-    private var _xStr:String;
-    private var _yStr:String;
+    private var _start:String;
+    private var _rules:Array;
+    
     private var _angle:Number;
     private var _order:Number;
+    private var _fProductions:Array;
+    
     private var finalPath:ByteArray = new ByteArray();
 
-    public function LSystem(atom:String, fProductions:Array, xStr:String, yStr:String, angle:Number, order:Number, sprite:Sprite)
+    public function LSystem(start:String, rules:Array,  angle:Number, order:Number, sprite:Sprite)
     {
-      _atom = atom;
-      _fProductions = fProductions;
-      _xStr = xStr;
-      _yStr = yStr;
+      _start = start;
+      _rules = rules;
       _angle = angle;
       _order = order;
       turtle = new Turtle(new Point(-100, 100), degToRad(-85), 0x659D32, 0.5, sprite);
-      produceString(this._atom, _order);
+      _fProductions = new Array();
+      
+      for each (var r:Rule in rules) {
+        if (r.variable == "F") {
+          _fProductions.push(r.expression);
+        }
+      }
+      
+      produceString(this._start, _order);
       finalPath.position = 0;
     }
 
-    public function get atom():String
+    public function get start():String
     {
-      return _atom;
+      return _start;
     }
 
-    public function get fProductions():Array
+    public function get rules():Array
     {
-      return _fProductions;
+      return _rules;
     }
-
-    public function get xStr():String
-    {
-      return _xStr;
-    }
-
-    public function get yStr():String
-    {
-      return _yStr;  
-    }
-
+    
     public function get angle():Number
     {
       return _angle;
     }
+    
+    
 
     public function iterate(iterationSteps:Number = 1):Boolean
     {
@@ -87,12 +86,15 @@ package
               turtle.turn(-degToRad(this.angle));
               break;
             case 3:
-              turtle.forward(3, true);
+              turtle.turn(degToRad(180));
               break;
             case 4:
-              turtle.saveTurtle();
+              turtle.forward(3, true);
               break;
             case 5:
+              turtle.saveTurtle();
+              break;
+            case 6:
               turtle.restoreTurtle();
               break;
             
@@ -110,45 +112,44 @@ package
         {
           case '+':
             finalPath.writeByte(1);
-            //turtle.turn(degToRad(this.angle));
             break;
           case '-':
             finalPath.writeByte(2);
-            //turtle.turn(-degToRad(this.angle));
+            break;
+          case '|':
+            finalPath.writeByte(3);
             break;
           case 'F':
             if (order > 0)
             {
-              var randomNo:uint = Math.random() * (fProductions.length);
-              var fStr:String = fProductions[randomNo];
+              var randomNo:uint = Math.random() * (_fProductions.length);
+              var fStr:String = _fProductions[randomNo];
               produceString(fStr, order - 1);
             }
             else
             {
-              finalPath.writeByte(3);
-              //turtle.forward(10, true);
+              finalPath.writeByte(4);
             }
             break;
-          case 'X':
-            if (order > 0)
-              produceString(this.xStr, order - 1);
-            break;
-          case 'Y':
-            if (order > 0)
-              produceString(this.yStr, order - 1);
-            break;
           case '[':
-            finalPath.writeByte(4);
-            //turtle.saveTurtle();
+            finalPath.writeByte(5);
             break;
           case ']':
-            finalPath.writeByte(5);
-            //turtle.restoreTurtle();
+            finalPath.writeByte(6);
             break;
+          default:
+            if (order > 0)
+              for each (var r:Rule in _rules) {
+                if(r.variable == string.charAt(i))
+                  produceString(r.expression, order - 1);
+              }
+            break;
+          
+          
         }
       }
     }
-
+    
     private function getLineAngleRad(deltaX:Number, deltaY:Number):Number
     {
       return Math.atan2(deltaY, deltaX);
