@@ -4,6 +4,8 @@ package
   import flash.errors.EOFError;
   import flash.geom.Point;
   import flash.utils.ByteArray;
+  
+  import parser.Rule;
 
   public class LSystem
   {
@@ -50,8 +52,6 @@ package
     {
       return _angle;
     }
-    
-    
 
     public function iterate(iterationSteps:Number = 1):Boolean
     {

@@ -2,10 +2,14 @@ package
 {
   import flash.display.Sprite;
   import flash.events.Event;
+  
+  import parser.Rule;
+  import parser.RulesParser;
+  import parser.Scanner;
 
   public class Main extends Sprite
   {
-    private var parser:RulesParser;
+    private var rulesParser:RulesParser;
     private var lSystem:LSystem;
     
     public function Main()
@@ -13,9 +17,9 @@ package
       x=150;
       y=300;
       super();
-      parser = new RulesParser( new Scanner("X -> F-[[X]+X]+F[+FX]-X\n"
+      rulesParser = new RulesParser( new Scanner("X -> F-[[X]+X]+F[+FX]-X\n"
       +"F -> FF"));
-      var rules:Array = parser.parse();
+      var rules:Array = rulesParser.parse();
       for each(var r:Rule in rules) {
         trace(r.variable + " " + r.expression);
       }

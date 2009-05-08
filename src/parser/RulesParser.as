@@ -1,4 +1,4 @@
-package
+package parser
 {  
 
   public class RulesParser
