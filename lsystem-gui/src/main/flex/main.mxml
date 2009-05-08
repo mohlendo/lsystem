@@ -2,35 +2,99 @@
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
 			   xmlns:s="library://ns.adobe.com/flex/spark"
 			   xmlns:mx="library://ns.adobe.com/flex/halo"
-			   xmlns:lsystem="lsystem.*">
+			   xmlns:lsystem="lsystem.*" xmlns:local="*">
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+		]]>
+	</fx:Script>
+
+	<fx:Declarations>
+		<fx:Array id="presetList">
+			<local:LSystemData 
+				name="Lsystema vulgaris" 
+				angle="27.7" 
+				order="5" 
+				axiom="F">
+				<local:rules>
+				<fx:String>F -> F[+F]F[-F]F</fx:String>
+				</local:rules>
+			</local:LSystemData>
+			<local:LSystemData 
+				name="Tree 1" 
+				angle="27" 
+				order="6" 
+				axiom="X">
+				<local:rules>
+				<fx:String>X -> F-[[X]+X]+F[+FX]-X
+				F -> FF
+				</fx:String>
+				</local:rules>
+			</local:LSystemData>
+			<local:LSystemData 
+				name="Tree 2" 
+				angle="37" 
+				order="6" 
+				axiom="T">
+				<local:rules>
+				<fx:String>T -> R-[T]++[++L]R[--L]+[T]--T
+R -> F[++L][--L]F
+L -> [+FX-FX-FX+|+FX-FX-FX|+FXFX]
+FX -> FX
+F -> FF
+				</fx:String>
+				</local:rules>
+			</local:LSystemData>
+			<local:LSystemData 
+				name="Tree 3" 
+				angle="22" 
+				order="4" 
+				axiom="X">
+				<local:rules>
+				<fx:String>F -> FF-[-F+F+F]+[+F-F-F]
+				F -> FF-[-F+F][FF]+[+F-F]
+				X -> YYYYF
+				</fx:String>
+				</local:rules>
+			</local:LSystemData>
+		</fx:Array>
+	</fx:Declarations>
 	<s:layout>
 		<s:HorizontalLayout/>
 	</s:layout>
 	<s:VGroup id="controlPanel"
 			  width="250"
 			  height="100%">
+			  
+		<s:HGroup>
+			<s:SimpleText text="Presets:"
+						  fontWeight="bold"/>
+			<s:DropDownList id="presets" dataProvider="{ new ArrayCollection( presetList )}" labelField="name"/>
+		</s:HGroup>
+		
 		<s:HGroup>
 			<s:SimpleText text="Angle:"
 						  fontWeight="bold"/>
 			<s:TextInput id="angle"
-						 text="27"/>
+						 text="{presets.selectedItem.angle}"/>
 		</s:HGroup>
 
 		<s:HGroup>
 			<s:SimpleText text="Order:"
 						  fontWeight="bold"/>
 			<s:TextInput id="order"
-						 text="6"/>
+						 text="{presets.selectedItem.order}"/>
+		</s:HGroup>
+		<s:HGroup>
+			<s:SimpleText text="Axiom:"
+						  fontWeight="bold"/>
+			<s:TextInput id="axiom"
+						 text="{presets.selectedItem.axiom}"/>
 		</s:HGroup>
 		<s:HGroup>
 			<s:SimpleText text="Rules:"
 						  fontWeight="bold"/>
-			<s:TextArea id="source">
-				<s:text>
-					<fx:String>X -> F-[[X]+X]+F[+FX]-X
-				F -> FF</fx:String>
-				</s:text>
-			</s:TextArea>
+			<s:TextArea id="source" text="{presets.selectedItem.rules}"/>
 
 		</s:HGroup>
 		<s:Button label="Draw"
@@ -39,6 +103,7 @@
 
 	<lsystem:LSystemView id="lsystemView"
 						 source="{source.text}"
+						 axiom="{axiom.text}"
 						 angle="{Number(angle.text)}"
 						 order="{Number(order.text)}"
 						 width="100%"

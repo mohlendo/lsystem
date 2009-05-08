@@ -15,6 +15,9 @@ package lsystem
     	public var source:String;
     	
     	[Bindable]
+    	public var axiom:String;
+    	
+    	[Bindable]
     	public var angle:Number;
     	
     	[Bindable]
@@ -36,7 +39,7 @@ package lsystem
     	public function draw():void {
     		rulesParser = new RulesParser( new Scanner(source));
       		var rules:Array = rulesParser.parse();
-      		lSystem = new LSystem("X",rules,angle,order); 
+      		lSystem = new LSystem(axiom,rules,angle,order); 
     		lSystem.draw(this, width/2, height-10);
     	}
 		
