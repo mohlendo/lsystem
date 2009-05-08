@@ -1,3 +1,4 @@
 *.air
 *.pfx
-bin-debug/*
+.metadata/*
+lsystem/bin-debug/*
