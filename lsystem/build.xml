@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<project name="FlexLibraryProject" basedir="./" default="compile">
+
+	
+	<target name="compile">
+		
+		<java jar="${mxmlc}" failonerror="true" fork="true" dir="${frameworkDirectory}" >
+			
+			<jvmarg line="-ea -DAS3 -DAVMPLUS -Xms32m -Xmx384m -Dsun.io.useCanonCaches=false"/>
+			
+			<arg line ="-library-path=${libraries}" />
+			
+			<arg value="-file-specs" />
+			<arg value="${applicationfile}"/>
+			
+			<arg line="-compiler.source-path=${otherSourceFolders}"/>
+			
+			<arg value="-output"/>
+			<arg value="${outputSWF}"/>
+			
+		</java>
+	</target>
+	
+	
+</project>
