@@ -3,9 +3,10 @@ package
   import flash.display.Sprite;
   import flash.events.Event;
   
-  import parser.Rule;
-  import parser.RulesParser;
-  import parser.Scanner;
+  import lsystem.LSystem;
+  import lsystem.parser.Rule;
+  import lsystem.parser.RulesParser;
+  import lsystem.parser.Scanner;
 
   public class Main extends Sprite
   {

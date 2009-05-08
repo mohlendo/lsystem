@@ -1,11 +1,12 @@
-package
+package lsystem
 {
   import flash.display.Sprite;
   import flash.errors.EOFError;
   import flash.geom.Point;
   import flash.utils.ByteArray;
   
-  import parser.Rule;
+  import lsystem.parser.Rule;
+  import lsystem.rendering.Turtle;
 
   public class LSystem
   {

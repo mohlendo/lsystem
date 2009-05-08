@@ -1,4 +1,4 @@
-package parser
+package lsystem.parser
 {
 
   public class Scanner
