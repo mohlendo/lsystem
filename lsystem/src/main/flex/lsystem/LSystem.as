@@ -20,13 +20,12 @@ package lsystem
     
     private var finalPath:ByteArray = new ByteArray();
 
-    public function LSystem(start:String, rules:Array,  angle:Number, order:Number, sprite:Sprite)
+    public function LSystem(start:String, rules:Array,  angle:Number, order:Number)
     {
       _start = start;
       _rules = rules;
       _angle = angle;
       _order = order;
-      turtle = new Turtle(new Point(-100, 100), degToRad(-85), 0x659D32, 0.5, sprite);
       _fProductions = new Array();
       
       for each (var r:Rule in rules) {
@@ -52,6 +51,11 @@ package lsystem
     public function get angle():Number
     {
       return _angle;
+    }
+    
+    public function draw(sprite:Sprite, x:Number, y:Number):void {
+    	turtle = new Turtle(new Point(x,y), degToRad(-85), 0x659D32, 0.5, sprite);
+      	iterate(-1);    	
     }
 
     public function iterate(iterationSteps:Number = 1):Boolean
