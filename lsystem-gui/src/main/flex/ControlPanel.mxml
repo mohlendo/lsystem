@@ -1,4 +1,206 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/halo">
+<s:SkinnableContainer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	xmlns:mx="library://ns.adobe.com/flex/halo" 
+	xmlns:local="*"
+	skinClass="ControlPanelSkin">
+	<fx:Script>
+		<![CDATA[
+			import mx.events.FlexEvent;
+			import mx.collections.ArrayCollection;
+
+			protected function iterate_changeHandler(event:Event):void
+			{
+				if(!iterate.selected)
+					iterateSteps.value = 0;
+			}
+
+		]]>
+	</fx:Script>
 	
-</s:Group>
+	<fx:Metadata>
+		[Event(name="draw", type="mx.events.FlexEvent")]		
+	</fx:Metadata>
+	
+	<fx:Declarations>
+		<fx:Array id="presetList">
+			<local:LSystemData 
+				name="Lsystema vulgaris" 
+				startAngle="-90"
+				angle="27.7" 
+				order="5" 
+				axiom="F">
+				<local:rules>
+				<fx:String>F -> F[+F]F[-F]F</fx:String>
+				</local:rules>
+			</local:LSystemData>
+			<local:LSystemData 
+				name="Tree 1" 
+				startAngle="-90"
+				angle="27" 
+				order="6" 
+				axiom="X">
+				<local:rules>
+				<fx:String>X -> F-[[X]+X]+F[+FX]-X
+				F -> FF
+				</fx:String>
+				</local:rules>
+			</local:LSystemData>
+			<local:LSystemData 
+				name="Tree 2" 
+				startAngle="-90"
+				angle="37" 
+				order="6" 
+				axiom="T">
+				<local:rules>
+				<fx:String>T -> R-[T]++[++L]R[--L]+[T]--T
+R -> F[++L][--L]F
+L -> [+FX-FX-FX+|+FX-FX-FX|+FXFX]
+FX -> FX
+F -> FF
+				</fx:String>
+				</local:rules>
+			</local:LSystemData>
+			<local:LSystemData 
+				name="Tree 3" 
+				startAngle="-90"
+				angle="22" 
+				order="4" 
+				axiom="X">
+				<local:rules>
+				<fx:String>F -> FF-[-F+F+F]+[+F-F-F]
+				F -> FF-[-F+F][FF]+[+F-F]
+				X -> YYYYF
+				</fx:String>
+				</local:rules>
+			</local:LSystemData>
+			<local:LSystemData 
+				name="Koch curve" 
+				angle="60" 
+				order="6" 
+				axiom="F">
+				<local:rules>
+				<fx:String>F -> F-F++F-F
+				</fx:String>
+				</local:rules>
+			</local:LSystemData>
+			<local:LSystemData 
+				name="Quad Koch island" 
+				angle="90" 
+				order="3" 
+				axiom="F+F+F+F">
+				<local:rules>
+				<fx:String>F -> F+F-F-FF+F+F-F
+				</fx:String>
+				</local:rules>
+			</local:LSystemData>
+			<local:LSystemData 
+				name="Hilbert curve" 
+				angle="90" 
+				order="6" 
+				axiom="X">
+				<local:rules>
+				<fx:String>F -> F
+				X -> -YF+XFX+FY-
+				Y -> +XF-YFY-FX+
+				</fx:String>
+				</local:rules>
+			</local:LSystemData>
+			<local:LSystemData 
+				name="Sierpinski Arrowhead" 
+				angle="60" 
+				order="6" 
+				axiom="YF">
+				<local:rules>
+				<fx:String>F -> F
+				X -> YF+XF+Y
+				Y -> XF-YF-X
+				</fx:String>
+				</local:rules>
+			</local:LSystemData>
+			<local:LSystemData 
+				name="Dragon curve" 
+				angle="90" 
+				order="10" 
+				axiom="X">
+				<local:rules>
+				<fx:String>
+				F -> F
+				X -> X+YF+
+				Y -> -FX-Y
+				</fx:String>
+				</local:rules>
+			</local:LSystemData>
+		</fx:Array>
+	</fx:Declarations>
+	
+		<s:HGroup verticalAlign="middle">
+			<s:SimpleText text="Presets:"
+						  fontWeight="bold" width="75"/>
+			<s:DropDownList id="presets"
+				dataProvider="{ new ArrayCollection( presetList )}" 
+				selectedIndex="0"
+				labelField="name" 
+				width="150"/>
+		</s:HGroup>
+		
+		<s:HGroup verticalAlign="middle">
+			<s:SimpleText text="Startangle:"
+						  fontWeight="bold" width="75"/>
+			<s:NumericStepper id="startAngle" width="55" value="{presets.selectedItem.startAngle}" stepSize="0.1" maximum="360.0" minimum="-360.0" valueWrap="true"/>	
+		</s:HGroup>
+		
+		<s:HGroup verticalAlign="middle">
+			<s:SimpleText text="Angle:"
+						  fontWeight="bold" width="75"/>
+			<s:NumericStepper id="angle" width="55" value="{presets.selectedItem.angle}" stepSize="0.1" maximum="360.0" minimum="-360.0" valueWrap="true"/>	
+		</s:HGroup>
+
+		<s:HGroup verticalAlign="middle">
+			<s:SimpleText text="Order:"
+						  fontWeight="bold" width="75"/>
+			<!--s:TextInput id="orderTxt" text="{order.value}" change="{order.value = Number(orderTxt.text)}"/>
+			<s:Spinner id="order" value="{presets.selectedItem.order}"/-->	
+			<s:NumericStepper id="order" width="55" value="{presets.selectedItem.order}" valueWrap="true"/>	
+		</s:HGroup>
+		<s:HGroup verticalAlign="top">
+			<s:SimpleText text="Too big numbers may kill your system." fontStyle="italic" />			
+		</s:HGroup>
+		<s:HGroup verticalAlign="middle">
+			<s:SimpleText text="Axiom:"
+						  fontWeight="bold" width="75"/>
+			<s:TextInput id="axiom"
+						 text="{presets.selectedItem.axiom}"/>
+		</s:HGroup>
+		<s:HGroup>
+			<s:SimpleText text="Rules:"
+						  fontWeight="bold" width="75" />
+			<s:TextArea id="source" text="{presets.selectedItem.rules}"/>
+
+		</s:HGroup>
+		
+		<s:SimpleText text="Draw step-wise:" fontWeight="bold"/>
+		
+		<s:HGroup verticalAlign="middle">
+			<s:CheckBox id="iterate" change="iterate_changeHandler(event)"/>
+			<s:NumericStepper id="iterateSteps" value="0" 
+				stepSize="10"
+				maximum="10000"
+				valueWrap="true" 
+				enabled="{iterate.selected}"/>	
+			<s:SimpleText text="Steps per Frame"/>
+		</s:HGroup>
+		<s:HGroup>
+			<s:SimpleText text="Line Thickness:"
+						  fontWeight="bold" width="75" />
+			<s:NumericStepper id="lineThickness" value="0.5" 
+				stepSize="0.5"/>
+		</s:HGroup>
+		<s:HGroup>
+			<s:SimpleText text="Line Length:"
+						  fontWeight="bold" width="75" />
+			<s:NumericStepper id="lineLength" value="3" 
+				stepSize="0.5" maximum="100"/>
+		</s:HGroup>
+		<s:Button label="Draw" click="dispatchEvent(new FlexEvent('draw'))"/>
+</s:SkinnableContainer>
