@@ -42,6 +42,8 @@ package lsystem
 		public function LSystemView()
 		{
 			super();			
+			background = new Shape();    		
+    		this.addChild(background);			   
 			this.addEventListener(MouseEvent.CLICK,handleMouseClick);			     		
 		}
 		
@@ -54,22 +56,34 @@ package lsystem
     		  						
 		}
 		
+		protected override function commitProperties():void {
+			super.commitProperties();
+		}		
+		
+		protected override function measure():void {
+			super.measure();
+		}
+		
 		
 		protected override function updateDisplayList(unscaledWidth:Number,
                                         unscaledHeight:Number):void
     	{	
-    		background = new Shape();
-    		startPoint = new Shape();
+    		super.updateDisplayList(unscaledWidth, unscaledHeight);
+    		
+    		background.graphics.clear();
     		background.graphics.beginFill(0xFFFFFF);
-    		background.graphics.drawRect(x,y,width, height);    
-    		this.addChild(background);		    		
+    		background.graphics.drawRect(x, y, unscaledWidth, unscaledHeight);    
     		
-    		startX = width/2;
-			startY =  height/2;
-			startPoint.graphics.beginFill(0xFF0000);
-    		startPoint.graphics.drawCircle(startX, startY,5);
-    		this.addChild(startPoint);		
-    		
+    		if(startPoint == null) {
+    			startPoint = new Shape();    			
+	    		startX = unscaledWidth/2;
+				startY =  unscaledHeight/2;
+				startPoint.graphics.clear();
+				startPoint.graphics.beginFill(0xFF0000);
+	    		startPoint.graphics.drawCircle(startX, startY,5); 
+	    		
+    			this.addChild(startPoint);	  
+    		}	
     	}
     	
     	public function draw(iterationSteps:Number = -1):void {

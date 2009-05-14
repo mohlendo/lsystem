@@ -56,7 +56,7 @@ package lsystem
     
     public function draw(x:Number, y:Number, startAngle:Number,lineThickness:Number ,distance:Number, iterationSteps:Number = -1):void {
     	turtle = new Turtle(new Point(x,y), degToRad(startAngle), 0x659D32, lineThickness, this.graphics);
-      	var func = function(event:Event):void {
+      	var func:Function = function(event:Event):void {
 		  	if(!iteratePath(distance, iterationSteps)) {
 		  		this.removeEventListener(Event.ENTER_FRAME, func);
 		  	};
