@@ -10,7 +10,7 @@ package lsystem.rendering
     private var curPosOriginal:Point;
     private var curDirRad:Number;
     private var color:uint;
-    private var lineThickness:uint;
+    private var lineThickness:uint; 
     private var graphics:Graphics;
     private var stateStack:Array;
 

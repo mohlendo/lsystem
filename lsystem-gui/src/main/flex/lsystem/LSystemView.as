@@ -27,6 +27,12 @@ package lsystem
     	[Bindable]
     	public var order:Number;
     	
+    	[Bindable]
+    	public var lineThickness:Number;
+    	
+    	[Bindable]
+    	public var lineLength:Number;
+    	
     	private var startPoint:Shape;
     	private var background:Shape;
     	private var startX:int;
@@ -66,7 +72,7 @@ package lsystem
     		
     	}
     	
-    	public function draw():void {
+    	public function draw(iterationSteps:Number = -1):void {
     		rulesParser = new RulesParser( new Scanner(source));
       		var rules:Array = rulesParser.parse();
       		if(lSystem != null) {
@@ -74,7 +80,7 @@ package lsystem
       		}
       		lSystem = new LSystem(axiom,rules,angle,order);
       		this.addChild(lSystem); 
-    		lSystem.draw(startX, startY, startAngle);
+    		lSystem.draw(startX, startY, startAngle, lineThickness, lineLength, iterationSteps);
     	}
 		
 		

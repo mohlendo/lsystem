@@ -3,3 +3,4 @@
 .metadata/*
 lsystem/bin/*
 lsystem-gui/bin-debug/*
+lsystem-gui/bin-release/*

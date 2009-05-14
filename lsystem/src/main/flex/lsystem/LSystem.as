@@ -2,6 +2,7 @@ package lsystem
 {
   import flash.display.Shape;
   import flash.errors.EOFError;
+  import flash.events.Event;
   import flash.geom.Point;
   import flash.utils.ByteArray;
   
@@ -53,12 +54,17 @@ package lsystem
       return _angle;
     }
     
-    public function draw(x:Number, y:Number, startAngle:Number):void {
-    	turtle = new Turtle(new Point(x,y), degToRad(startAngle), 0x659D32, 0.5, this.graphics);
-      	iterate(-1);    	
+    public function draw(x:Number, y:Number, startAngle:Number,lineThickness:Number ,distance:Number, iterationSteps:Number = -1):void {
+    	turtle = new Turtle(new Point(x,y), degToRad(startAngle), 0x659D32, lineThickness, this.graphics);
+      	var func = function(event:Event):void {
+		  	if(!iteratePath(distance, iterationSteps)) {
+		  		this.removeEventListener(Event.ENTER_FRAME, func);
+		  	};
+		  }
+  		this.addEventListener(Event.ENTER_FRAME, func);
     }
 
-    public function iterate(iterationSteps:Number = 1):Boolean
+    private function iteratePath(distance:uint, iterationSteps:Number = -1):Boolean
     {
       if (iterationSteps <= 0)
       {
@@ -94,7 +100,7 @@ package lsystem
               turtle.turn(degToRad(180));
               break;
             case 4:
-              turtle.forward(3, true);
+              turtle.forward(distance, true);
               break;
             case 5:
               turtle.saveTurtle();

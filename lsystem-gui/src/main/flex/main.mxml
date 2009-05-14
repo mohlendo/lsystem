@@ -173,7 +173,31 @@ F -> FF
 			<s:TextArea id="source" text="{presets.selectedItem.rules}"/>
 
 		</s:HGroup>
-		<s:Button label="Draw" click="lsystemView.draw()"/>
+		
+		<s:SimpleText text="Draw step-wise:" fontWeight="bold"/>
+		
+		<s:HGroup verticalAlign="middle">
+			<s:CheckBox id="iterate" />
+			<s:NumericStepper id="iterateSteps" value="0" 
+				stepSize="10"
+				maximum="10000"
+				valueWrap="true" 
+				enabled="{iterate.selected}"/>	
+			<s:SimpleText text="Steps per Frame"/>
+		</s:HGroup>
+		<s:HGroup>
+			<s:SimpleText text="Line Thickness:"
+						  fontWeight="bold" width="75" />
+			<s:NumericStepper id="lineThickness" value="0.5" 
+				stepSize="0.5"/>
+		</s:HGroup>
+		<s:HGroup>
+			<s:SimpleText text="Line Length:"
+						  fontWeight="bold" width="75" />
+			<s:NumericStepper id="lineLength" value="3" 
+				stepSize="0.5" maximum="100"/>
+		</s:HGroup>
+		<s:Button label="Draw" click="lsystemView.draw(iterateSteps.value)"/>
 	</s:VGroup>
 
 	<lsystem:LSystemView id="lsystemView"
@@ -181,6 +205,8 @@ F -> FF
 						 axiom="{axiom.text}"
 						 angle="{angle.value}"
 						 order="{order.value}"
+						 lineLength="{lineLength.value}"
+						 lineThickness="{lineThickness.value}"
 						 startAngle="{startAngle.value}"
 						 width="100%"
 						 height="100%"/>
