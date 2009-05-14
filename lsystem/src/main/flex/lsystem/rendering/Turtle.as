@@ -1,5 +1,6 @@
 package lsystem.rendering
 {
+  import flash.display.Graphics;
   import flash.display.Sprite;
   import flash.geom.Point;
 
@@ -10,7 +11,7 @@ package lsystem.rendering
     private var curDirRad:Number;
     private var color:uint;
     private var lineThickness:uint;
-    private var sprite:Sprite;
+    private var graphics:Graphics;
     private var stateStack:Array;
 
     // curPos is the current position of the turtle
@@ -18,14 +19,14 @@ package lsystem.rendering
     // color is the color of the line drawn by turtle
     // lineThickness is the thickness of said line
     // sprite is the Sprite we're drawing on
-    public function Turtle(_curPos:Point, _curDir:Number, _color:uint, _lt:uint, _sprite:Sprite)
+    public function Turtle(_curPos:Point, _curDir:Number, _color:uint, _lt:uint, _graphics:Graphics)
     {
       curPos = new Point(_curPos.x, _curPos.y);
       curPosOriginal = new Point(_curPos.x, _curPos.y);
       curDirRad = _curDir;
       color = _color;
       lineThickness = _lt;
-      sprite = _sprite;
+      graphics = _graphics;
       stateStack = new Array();
       resetTurtle();
     }
@@ -51,12 +52,12 @@ package lsystem.rendering
       curPos.y += (distance * Math.sin(curDirRad));
       if (isVisible)
       {
-        sprite.graphics.lineStyle(lineThickness, color);
-        sprite.graphics.lineTo(curPos.x, curPos.y);
+        graphics.lineStyle(lineThickness, color);
+        graphics.lineTo(curPos.x, curPos.y);
       }
       else
       {
-        sprite.graphics.moveTo(curPos.x, curPos.y);
+        graphics.moveTo(curPos.x, curPos.y);
       }
     }
 
@@ -76,17 +77,17 @@ package lsystem.rendering
         curPos.x = curState.curPos.x;
         curPos.y = curState.curPos.y;
         curDirRad = curState.curDirRad;
-        sprite.graphics.moveTo(curPos.x, curPos.y);
+        graphics.moveTo(curPos.x, curPos.y);
       }
     }
 
     // Reset the turtle
     public function resetTurtle():void
     {
-      sprite.graphics.clear();
+      graphics.clear();
       curPos.x = curPosOriginal.x;
       curPos.y = curPosOriginal.y;
-      sprite.graphics.moveTo(curPos.x, curPos.y);
+      graphics.moveTo(curPos.x, curPos.y);
     }
 
     private function getLineAngleRad(deltaX:Number, deltaY:Number):Number

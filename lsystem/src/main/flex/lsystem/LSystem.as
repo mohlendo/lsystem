@@ -1,6 +1,6 @@
 package lsystem
 {
-  import flash.display.Sprite;
+  import flash.display.Shape;
   import flash.errors.EOFError;
   import flash.geom.Point;
   import flash.utils.ByteArray;
@@ -8,7 +8,7 @@ package lsystem
   import lsystem.parser.Rule;
   import lsystem.rendering.Turtle;
 
-  public class LSystem
+  public class LSystem extends Shape
   {
     private var turtle:Turtle;
     private var _start:String;
@@ -53,8 +53,8 @@ package lsystem
       return _angle;
     }
     
-    public function draw(sprite:Sprite, x:Number, y:Number):void {
-    	turtle = new Turtle(new Point(x,y), degToRad(-85), 0x659D32, 0.5, sprite);
+    public function draw(x:Number, y:Number, startAngle:Number):void {
+    	turtle = new Turtle(new Point(x,y), degToRad(startAngle), 0x659D32, 0.5, this.graphics);
       	iterate(-1);    	
     }
 

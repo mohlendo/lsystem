@@ -13,6 +13,7 @@
 		<fx:Array id="presetList">
 			<local:LSystemData 
 				name="Lsystema vulgaris" 
+				startAngle="-90"
 				angle="27.7" 
 				order="5" 
 				axiom="F">
@@ -22,6 +23,7 @@
 			</local:LSystemData>
 			<local:LSystemData 
 				name="Tree 1" 
+				startAngle="-90"
 				angle="27" 
 				order="6" 
 				axiom="X">
@@ -33,6 +35,7 @@
 			</local:LSystemData>
 			<local:LSystemData 
 				name="Tree 2" 
+				startAngle="-90"
 				angle="37" 
 				order="6" 
 				axiom="T">
@@ -47,6 +50,7 @@ F -> FF
 			</local:LSystemData>
 			<local:LSystemData 
 				name="Tree 3" 
+				startAngle="-90"
 				angle="22" 
 				order="4" 
 				axiom="X">
@@ -57,56 +61,129 @@ F -> FF
 				</fx:String>
 				</local:rules>
 			</local:LSystemData>
+			<local:LSystemData 
+				name="Koch curve" 
+				angle="60" 
+				order="6" 
+				axiom="F">
+				<local:rules>
+				<fx:String>F -> F-F++F-F
+				</fx:String>
+				</local:rules>
+			</local:LSystemData>
+			<local:LSystemData 
+				name="Quad Koch island" 
+				angle="90" 
+				order="3" 
+				axiom="F+F+F+F">
+				<local:rules>
+				<fx:String>F -> F+F-F-FF+F+F-F
+				</fx:String>
+				</local:rules>
+			</local:LSystemData>
+			<local:LSystemData 
+				name="Hilbert curve" 
+				angle="90" 
+				order="6" 
+				axiom="X">
+				<local:rules>
+				<fx:String>F -> F
+				X -> -YF+XFX+FY-
+				Y -> +XF-YFY-FX+
+				</fx:String>
+				</local:rules>
+			</local:LSystemData>
+			<local:LSystemData 
+				name="Sierpinski Arrowhead" 
+				angle="60" 
+				order="6" 
+				axiom="YF">
+				<local:rules>
+				<fx:String>F -> F
+				X -> YF+XF+Y
+				Y -> XF-YF-X
+				</fx:String>
+				</local:rules>
+			</local:LSystemData>
+			<local:LSystemData 
+				name="Dragon curve" 
+				angle="90" 
+				order="10" 
+				axiom="X">
+				<local:rules>
+				<fx:String>
+				F -> F
+				X -> X+YF+
+				Y -> -FX-Y
+				</fx:String>
+				</local:rules>
+			</local:LSystemData>
 		</fx:Array>
 	</fx:Declarations>
+	<s:Group top="10" right="10" bottom="10" left="10"  width="100%" height="100%">		
 	<s:layout>
 		<s:HorizontalLayout/>
 	</s:layout>
+	
 	<s:VGroup id="controlPanel"
-			  width="250"
+			  width="280"
 			  height="100%">
 			  
-		<s:HGroup>
+		<s:HGroup verticalAlign="middle">
 			<s:SimpleText text="Presets:"
-						  fontWeight="bold"/>
-			<s:DropDownList id="presets" dataProvider="{ new ArrayCollection( presetList )}" labelField="name"/>
+						  fontWeight="bold" width="75"/>
+			<s:DropDownList id="presets"
+				dataProvider="{ new ArrayCollection( presetList )}" 
+				selectedIndex="0"
+				labelField="name" 
+				width="150"/>
 		</s:HGroup>
 		
-		<s:HGroup>
+		<s:HGroup verticalAlign="middle">
+			<s:SimpleText text="Startangle:"
+						  fontWeight="bold" width="75"/>
+			<s:NumericStepper id="startAngle" width="55" value="{presets.selectedItem.startAngle}" stepSize="0.1" maximum="360.0" minimum="-360.0" valueWrap="true"/>	
+		</s:HGroup>
+		
+		<s:HGroup verticalAlign="middle">
 			<s:SimpleText text="Angle:"
-						  fontWeight="bold"/>
-			<s:TextInput id="angle"
-						 text="{presets.selectedItem.angle}"/>
+						  fontWeight="bold" width="75"/>
+			<s:NumericStepper id="angle" width="55" value="{presets.selectedItem.angle}" stepSize="0.1" maximum="360.0" minimum="-360.0" valueWrap="true"/>	
 		</s:HGroup>
 
-		<s:HGroup>
+		<s:HGroup verticalAlign="middle">
 			<s:SimpleText text="Order:"
-						  fontWeight="bold"/>
-			<s:TextInput text="{order.value}"/>
-			<s:Spinner id="order" value="{presets.selectedItem.order}"/>
-			
+						  fontWeight="bold" width="75"/>
+			<!--s:TextInput id="orderTxt" text="{order.value}" change="{order.value = Number(orderTxt.text)}"/>
+			<s:Spinner id="order" value="{presets.selectedItem.order}"/-->	
+			<s:NumericStepper id="order" width="55" value="{presets.selectedItem.order}" valueWrap="true"/>	
 		</s:HGroup>
-		<s:HGroup>
+		<s:HGroup verticalAlign="top">
+			<s:SimpleText text="Too big numbers may kill your system." fontStyle="italic" />			
+		</s:HGroup>
+		<s:HGroup verticalAlign="middle">
 			<s:SimpleText text="Axiom:"
-						  fontWeight="bold"/>
+						  fontWeight="bold" width="75"/>
 			<s:TextInput id="axiom"
 						 text="{presets.selectedItem.axiom}"/>
 		</s:HGroup>
 		<s:HGroup>
 			<s:SimpleText text="Rules:"
-						  fontWeight="bold"/>
+						  fontWeight="bold" width="75" />
 			<s:TextArea id="source" text="{presets.selectedItem.rules}"/>
 
 		</s:HGroup>
-		<s:Button label="Draw"
-				  click="lsystemView.draw()"/>
+		<s:Button label="Draw" click="lsystemView.draw()"/>
 	</s:VGroup>
 
 	<lsystem:LSystemView id="lsystemView"
 						 source="{source.text}"
 						 axiom="{axiom.text}"
-						 angle="{Number(angle.text)}"
+						 angle="{angle.value}"
 						 order="{order.value}"
+						 startAngle="{startAngle.value}"
 						 width="100%"
 						 height="100%"/>
+	
+	</s:Group>
 </s:Application>
