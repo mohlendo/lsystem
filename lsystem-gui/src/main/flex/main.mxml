@@ -27,8 +27,7 @@
     </s:layout>
 
     <local:ControlPanel id="controlPanel"
-                        width="280"
-                        height="100%"
+                        width="300"
                         draw="controlPanel_drawHandler(event)"/>
 
     <lsystem:LSystemView id="lsystemView"

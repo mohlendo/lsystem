@@ -3,7 +3,7 @@
                       xmlns:s="library://ns.adobe.com/flex/spark"
                       xmlns:mx="library://ns.adobe.com/flex/halo"
                       xmlns:local="*"
-                      skinClass="ControlPanelSkin">
+                      skinClass="skins.ControlPanelSkin">
   <fx:Script>
     <![CDATA[
 			import mx.events.FlexEvent;
