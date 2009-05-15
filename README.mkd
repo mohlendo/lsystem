@@ -1,6 +1,6 @@
 Lsystem
 =========
-Lsystem is a ActionScript 3 Lindenmayer-System Runtime. Is is seperated into two FlexBuilder project:
+Lsystem is a ActionScript 3 Lindenmayer-system suntime. It is separated into two FlexBuilder projects:
 * lsystem - the parser and runtime
 * lsystem-gui - the Flex 4 based interface for the runtime
 
