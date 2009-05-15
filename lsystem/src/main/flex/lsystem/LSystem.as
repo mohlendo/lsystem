@@ -5,7 +5,7 @@ package lsystem
   import flash.events.Event;
   import flash.geom.Point;
   import flash.utils.ByteArray;
-  
+
   import lsystem.parser.Rule;
   import lsystem.rendering.Turtle;
 
@@ -14,29 +14,31 @@ package lsystem
     private var turtle:Turtle;
     private var _start:String;
     private var _rules:Array;
-    
+
     private var _angle:Number;
     private var _order:Number;
     private var _fProductions:Array;
-    
-    private var finalPath:ByteArray = new ByteArray();
 
-    public function LSystem(start:String, rules:Array,  angle:Number, order:Number)
+    private var finalPath:ByteArray=new ByteArray();
+
+    public function LSystem(start:String, rules:Array, angle:Number, order:Number)
     {
-      _start = start;
-      _rules = rules;
-      _angle = angle;
-      _order = order;
-      _fProductions = new Array();
-      
-      for each (var r:Rule in rules) {
-        if (r.variable == "F") {
+      _start=start;
+      _rules=rules;
+      _angle=angle;
+      _order=order;
+      _fProductions=new Array();
+
+      for each (var r:Rule in rules)
+      {
+        if (r.variable == "F")
+        {
           _fProductions.push(r.expression);
         }
       }
-      
+
       produceString(this._start, _order);
-      finalPath.position = 0;
+      finalPath.position=0;
     }
 
     public function get start():String
@@ -48,44 +50,51 @@ package lsystem
     {
       return _rules;
     }
-    
+
     public function get angle():Number
     {
       return _angle;
     }
-    
-    public function draw(x:Number, y:Number, startAngle:Number,lineThickness:Number ,distance:Number, iterationSteps:Number = -1):void {
-    	turtle = new Turtle(new Point(x,y), degToRad(startAngle), 0x659D32, lineThickness, this.graphics);
-      	var func:Function = function(event:Event):void {
-		  	if(!iteratePath(distance, iterationSteps)) {
-		  		this.removeEventListener(Event.ENTER_FRAME, func);
-		  	};
-		  }
-  		this.addEventListener(Event.ENTER_FRAME, func);
+
+    public function draw(x:Number, y:Number, startAngle:Number, lineThickness:Number, distance:Number, iterationSteps:Number=-1):void
+    {
+      turtle=new Turtle(new Point(x, y), degToRad(startAngle), 0x659D32, lineThickness, this.graphics);
+      var func:Function=function(event:Event):void
+      {
+        if (!iteratePath(distance, iterationSteps))
+        {
+          this.removeEventListener(Event.ENTER_FRAME, func);
+        }
+        ;
+      }
+      this.addEventListener(Event.ENTER_FRAME, func);
     }
 
-    private function iteratePath(distance:uint, iterationSteps:Number = -1):Boolean
+    private function iteratePath(distance:uint, iterationSteps:Number=-1):Boolean
     {
       if (iterationSteps <= 0)
       {
-        iterationSteps = finalPath.length - 1;
+        iterationSteps=finalPath.length - 1;
         if (iterationSteps == 0)
         {
           return false;
         }
       }
-      var eof:Boolean = false;
-      for (var i:uint = 0; i < iterationSteps && !eof; i++)
+      var eof:Boolean=false;
+      for (var i:uint=0; i < iterationSteps && !eof; i++)
       {
         if (finalPath.length >= 0)
         {
-          
+
           var step:int;
-          try {
-            step = finalPath.readByte();
-          
-          } catch(e:EOFError) {
-                return true
+          try
+          {
+            step=finalPath.readByte();
+
+          }
+          catch (e:EOFError)
+          {
+            return true
           }
 
           switch (step)
@@ -108,7 +117,7 @@ package lsystem
             case 6:
               turtle.restoreTurtle();
               break;
-            
+
           }
         }
       }
@@ -117,7 +126,7 @@ package lsystem
 
     private function produceString(string:String, order:uint):void
     {
-      for (var i:uint = 0; i < string.length; i++)
+      for (var i:uint=0; i < string.length; i++)
       {
         switch (string.charAt(i))
         {
@@ -133,8 +142,8 @@ package lsystem
           case 'F':
             if (order > 0)
             {
-              var randomNo:uint = Math.random() * (_fProductions.length);
-              var fStr:String = _fProductions[randomNo];
+              var randomNo:uint=Math.random() * (_fProductions.length);
+              var fStr:String=_fProductions[randomNo];
               produceString(fStr, order - 1);
             }
             else
@@ -150,17 +159,18 @@ package lsystem
             break;
           default:
             if (order > 0)
-              for each (var r:Rule in _rules) {
-                if(r.variable == string.charAt(i))
+              for each (var r:Rule in _rules)
+              {
+                if (r.variable == string.charAt(i))
                   produceString(r.expression, order - 1);
               }
             break;
-          
-          
+
+
         }
       }
     }
-    
+
     private function getLineAngleRad(deltaX:Number, deltaY:Number):Number
     {
       return Math.atan2(deltaY, deltaX);

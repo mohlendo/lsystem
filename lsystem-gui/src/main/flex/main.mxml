@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
-			   xmlns:s="library://ns.adobe.com/flex/spark"
-			   xmlns:mx="library://ns.adobe.com/flex/halo"
-			   xmlns:lsystem="lsystem.*" xmlns:local="*">
-	<fx:Script>
-		<![CDATA[
+               xmlns:s="library://ns.adobe.com/flex/spark"
+               xmlns:mx="library://ns.adobe.com/flex/halo"
+               xmlns:lsystem="lsystem.*"
+               xmlns:local="*">
+  <fx:Script>
+    <![CDATA[
 			import mx.events.FlexEvent;
 
 			protected function controlPanel_drawHandler(event:FlexEvent):void
@@ -13,25 +14,33 @@
 			}
 
 		]]>
-	</fx:Script>
-	
-	<s:Group top="10" right="10" bottom="10" left="10"  width="100%" height="100%">		
-	<s:layout>
-		<s:HorizontalLayout/>
-	</s:layout>
-	
-	<local:ControlPanel id="controlPanel" width="280" height="100%" draw="controlPanel_drawHandler(event)"/>
-	
-	<lsystem:LSystemView id="lsystemView"
-						 source="{controlPanel.source.text}"
-						 axiom="{controlPanel.axiom.text}"
-						 angle="{controlPanel.angle.value}"
-						 order="{controlPanel.order.value}"
-						 lineLength="{controlPanel.lineLength.value}"
-						 lineThickness="{controlPanel.lineThickness.value}"
-						 startAngle="{controlPanel.startAngle.value}"
-						 width="100%"
-						 height="100%"/>
-	
-	</s:Group>
+  </fx:Script>
+
+  <s:Group top="10"
+           right="10"
+           bottom="10"
+           left="10"
+           width="100%"
+           height="100%">
+    <s:layout>
+      <s:HorizontalLayout/>
+    </s:layout>
+
+    <local:ControlPanel id="controlPanel"
+                        width="280"
+                        height="100%"
+                        draw="controlPanel_drawHandler(event)"/>
+
+    <lsystem:LSystemView id="lsystemView"
+                         source="{controlPanel.source.text}"
+                         axiom="{controlPanel.axiom.text}"
+                         angle="{controlPanel.angle.value}"
+                         order="{controlPanel.order.value}"
+                         lineLength="{controlPanel.lineLength.value}"
+                         lineThickness="{controlPanel.lineThickness.value}"
+                         startAngle="{controlPanel.startAngle.value}"
+                         width="100%"
+                         height="100%"/>
+
+  </s:Group>
 </s:Application>
