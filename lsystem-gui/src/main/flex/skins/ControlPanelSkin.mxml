@@ -49,16 +49,16 @@
 
   <s:transitions>
     <mx:Transition fromState="normal" toState="collapsed">
-      <mx:Sequence>
-        <s:Resize targets="{ [hostComponent,] }" widthFrom="{hostComponent.width}" widthTo="30" duration="150"/>
-        <s:Fade targets="{ [shadow, border, background, contentGroup] }" alphaFrom="1" alphaTo="0" duration="200"/>
-      </mx:Sequence>
+      <mx:Parallel>
+        <s:Fade targets="{ [shadow, border, background, contentGroup] }" alphaFrom="1" alphaTo="0" duration="250"/>
+        <s:Resize targets="{ [hostComponent,] }" widthFrom="{hostComponent.width}" widthTo="30" duration="250"/>
+      </mx:Parallel>
     </mx:Transition>
     <mx:Transition fromState="collapsed" toState="normal">
-      <mx:Sequence>
+      <mx:Parallel>
+        <s:Resize targets="{ [hostComponent] }" widthFrom="30" widthTo="300" duration="250"/>
         <s:Fade targets="{ [shadow, border, background, contentGroup] }" alphaFrom="0" alphaTo="1" duration="250"/>
-        <s:Resize targets="{ [hostComponent] }" widthFrom="30" widthTo="300" duration="200"/>       
-      </mx:Sequence>
+      </mx:Parallel>
     </mx:Transition>
   </s:transitions>
 
