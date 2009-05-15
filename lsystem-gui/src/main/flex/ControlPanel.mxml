@@ -166,8 +166,6 @@ F -> FF
     <s:SimpleText text="Order:"
                   fontWeight="bold"
                   width="75"/>
-    <!--s:TextInput id="orderTxt" text="{order.value}" change="{order.value = Number(orderTxt.text)}"/>
-         <s:Spinner id="order" value="{presets.selectedItem.order}"/-->
     <s:NumericStepper id="order"
                       width="55"
                       value="{presets.selectedItem.order}"

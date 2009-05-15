@@ -21,26 +21,26 @@ package lsystem.rendering
     // sprite is the Sprite we're drawing on
     public function Turtle(_curPos:Point, _curDir:Number, _color:uint, _lt:uint, _graphics:Graphics)
     {
-      curPos=new Point(_curPos.x, _curPos.y);
-      curPosOriginal=new Point(_curPos.x, _curPos.y);
-      curDirRad=_curDir;
-      color=_color;
-      lineThickness=_lt;
-      graphics=_graphics;
-      stateStack=new Array();
+      curPos = new Point(_curPos.x, _curPos.y);
+      curPosOriginal = new Point(_curPos.x, _curPos.y);
+      curDirRad = _curDir;
+      color = _color;
+      lineThickness = _lt;
+      graphics = _graphics;
+      stateStack = new Array();
       resetTurtle();
     }
 
     // turn turtle to given angle, angle is given in radians
     public function turnTo(angleNew:Number):void
     {
-      curDirRad=angleNew;
+      curDirRad = angleNew;
     }
 
     // turn the turtle by the angle increment, angle given in radians
     public function turn(angleIncrement:Number):void
     {
-      curDirRad+=angleIncrement;
+      curDirRad += angleIncrement;
     }
 
     // move the turtle forward in current direction by dist amount
@@ -48,8 +48,8 @@ package lsystem.rendering
     // just move the turtle invisibly.
     public function forward(distance:Number, isVisible:Boolean):void
     {
-      curPos.x+=(distance * Math.cos(curDirRad));
-      curPos.y+=(distance * Math.sin(curDirRad));
+      curPos.x += (distance * Math.cos(curDirRad));
+      curPos.y += (distance * Math.sin(curDirRad));
       if (isVisible)
       {
         graphics.lineStyle(lineThickness, color);
@@ -63,9 +63,9 @@ package lsystem.rendering
 
     public function saveTurtle():void
     {
-      var curState:Object=new Object;
-      curState.curPos=new Point(curPos.x, curPos.y);
-      curState.curDirRad=curDirRad;
+      var curState:Object = new Object;
+      curState.curPos = new Point(curPos.x, curPos.y);
+      curState.curDirRad = curDirRad;
       stateStack.push(curState);
     }
 
@@ -73,10 +73,10 @@ package lsystem.rendering
     {
       if (stateStack.length > 0)
       {
-        var curState:Object=stateStack.pop();
-        curPos.x=curState.curPos.x;
-        curPos.y=curState.curPos.y;
-        curDirRad=curState.curDirRad;
+        var curState:Object = stateStack.pop();
+        curPos.x = curState.curPos.x;
+        curPos.y = curState.curPos.y;
+        curDirRad = curState.curDirRad;
         graphics.moveTo(curPos.x, curPos.y);
       }
     }
@@ -85,8 +85,8 @@ package lsystem.rendering
     public function resetTurtle():void
     {
       graphics.clear();
-      curPos.x=curPosOriginal.x;
-      curPos.y=curPosOriginal.y;
+      curPos.x = curPosOriginal.x;
+      curPos.y = curPosOriginal.y;
       graphics.moveTo(curPos.x, curPos.y);
     }
 

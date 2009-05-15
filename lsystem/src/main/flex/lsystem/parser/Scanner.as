@@ -9,9 +9,9 @@ package lsystem.parser
 
     public function Scanner(source:String)
     {
-      _pos=0;
-      _tokens=new Array();
-      _source=source;
+      _pos = 0;
+      _tokens = new Array();
+      _source = source;
     }
 
     public function nextToken():Token
@@ -25,9 +25,9 @@ package lsystem.parser
       {
         return new Token("eof", null);
       }
-      var c:String=_source.charAt(_pos++);
-      var buf:String="";
-      var code:int=c.charCodeAt(0);
+      var c:String = _source.charAt(_pos++);
+      var buf:String = "";
+      var code:int = c.charCodeAt(0);
       if (isAlpha(code) || (c == '_'))
       {
         /*while (isAlpha(code) || (c == '_'))
@@ -42,7 +42,7 @@ package lsystem.parser
            code = c.charCodeAt(0);
            }
          --_pos;*/
-        buf+=c;
+        buf += c;
         return new Token("name", buf);
       }
       else if (c == "\n")
@@ -51,15 +51,15 @@ package lsystem.parser
       }
       else if (c == "-")
       {
-        buf=c;
+        buf = c;
         while (!isEOF())
         {
-          c=_source.charAt(_pos);
+          c = _source.charAt(_pos);
           if (c != '>')
           {
             break;
           }
-          buf+=c;
+          buf += c;
           _pos++;
         }
         return new Token("operator", buf);
@@ -89,7 +89,7 @@ package lsystem.parser
     {
       while (!isEOF())
       {
-        var c:String=_source.charAt(_pos++);
+        var c:String = _source.charAt(_pos++);
         if ((c != " ") && (c != "\t"))
         {
           --_pos;

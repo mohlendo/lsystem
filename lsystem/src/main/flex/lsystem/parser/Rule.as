@@ -8,8 +8,8 @@ package lsystem.parser
 
     public function Rule(variable:String, expression:String)
     {
-      this.variable=variable;
-      this.expression=expression;
+      this.variable = variable;
+      this.expression = expression;
     }
   }
 }

@@ -8,8 +8,8 @@ package lsystem.parser
 
     public function Token(type:String, value:String)
     {
-      this.type=type;
-      this.value=value;
+      this.type = type;
+      this.value = value;
     }
   }
 }

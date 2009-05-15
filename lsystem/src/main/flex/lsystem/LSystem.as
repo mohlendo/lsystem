@@ -19,15 +19,15 @@ package lsystem
     private var _order:Number;
     private var _fProductions:Array;
 
-    private var finalPath:ByteArray=new ByteArray();
+    private var finalPath:ByteArray = new ByteArray();
 
     public function LSystem(start:String, rules:Array, angle:Number, order:Number)
     {
-      _start=start;
-      _rules=rules;
-      _angle=angle;
-      _order=order;
-      _fProductions=new Array();
+      _start = start;
+      _rules = rules;
+      _angle = angle;
+      _order = order;
+      _fProductions = new Array();
 
       for each (var r:Rule in rules)
       {
@@ -38,7 +38,7 @@ package lsystem
       }
 
       produceString(this._start, _order);
-      finalPath.position=0;
+      finalPath.position = 0;
     }
 
     public function get start():String
@@ -56,10 +56,10 @@ package lsystem
       return _angle;
     }
 
-    public function draw(x:Number, y:Number, startAngle:Number, lineThickness:Number, distance:Number, iterationSteps:Number=-1):void
+    public function draw(x:Number, y:Number, startAngle:Number, lineThickness:Number, distance:Number, iterationSteps:Number = -1):void
     {
-      turtle=new Turtle(new Point(x, y), degToRad(startAngle), 0x659D32, lineThickness, this.graphics);
-      var func:Function=function(event:Event):void
+      turtle = new Turtle(new Point(x, y), degToRad(startAngle), 0x659D32, lineThickness, this.graphics);
+      var func:Function = function(event:Event):void
       {
         if (!iteratePath(distance, iterationSteps))
         {
@@ -70,18 +70,18 @@ package lsystem
       this.addEventListener(Event.ENTER_FRAME, func);
     }
 
-    private function iteratePath(distance:uint, iterationSteps:Number=-1):Boolean
+    private function iteratePath(distance:uint, iterationSteps:Number = -1):Boolean
     {
       if (iterationSteps <= 0)
       {
-        iterationSteps=finalPath.length - 1;
+        iterationSteps = finalPath.length - 1;
         if (iterationSteps == 0)
         {
           return false;
         }
       }
-      var eof:Boolean=false;
-      for (var i:uint=0; i < iterationSteps && !eof; i++)
+      var eof:Boolean = false;
+      for (var i:uint = 0; i < iterationSteps && !eof; i++)
       {
         if (finalPath.length >= 0)
         {
@@ -89,7 +89,7 @@ package lsystem
           var step:int;
           try
           {
-            step=finalPath.readByte();
+            step = finalPath.readByte();
 
           }
           catch (e:EOFError)
@@ -126,7 +126,7 @@ package lsystem
 
     private function produceString(string:String, order:uint):void
     {
-      for (var i:uint=0; i < string.length; i++)
+      for (var i:uint = 0; i < string.length; i++)
       {
         switch (string.charAt(i))
         {
@@ -142,8 +142,8 @@ package lsystem
           case 'F':
             if (order > 0)
             {
-              var randomNo:uint=Math.random() * (_fProductions.length);
-              var fStr:String=_fProductions[randomNo];
+              var randomNo:uint = Math.random() * (_fProductions.length);
+              var fStr:String = _fProductions[randomNo];
               produceString(fStr, order - 1);
             }
             else

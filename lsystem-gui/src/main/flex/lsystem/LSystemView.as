@@ -42,7 +42,7 @@ package lsystem
     public function LSystemView()
     {
       super();
-      background=new Shape();
+      background = new Shape();
       this.addChild(background);
       this.addEventListener(MouseEvent.CLICK, handleMouseClick);
     }
@@ -50,8 +50,8 @@ package lsystem
     private function handleMouseClick(event:MouseEvent):void
     {
       startPoint.graphics.clear();
-      startX=event.localX;
-      startY=event.localY;
+      startX = event.localX;
+      startY = event.localY;
       startPoint.graphics.beginFill(0xFF0000);
       startPoint.graphics.drawCircle(event.localX, event.localY, 5);
 
@@ -78,9 +78,9 @@ package lsystem
 
       if (startPoint == null)
       {
-        startPoint=new Shape();
-        startX=unscaledWidth / 2;
-        startY=unscaledHeight / 2;
+        startPoint = new Shape();
+        startX = unscaledWidth / 2;
+        startY = unscaledHeight / 2;
         startPoint.graphics.clear();
         startPoint.graphics.beginFill(0xFF0000);
         startPoint.graphics.drawCircle(startX, startY, 5);
@@ -89,15 +89,15 @@ package lsystem
       }
     }
 
-    public function draw(iterationSteps:Number=-1):void
+    public function draw(iterationSteps:Number = -1):void
     {
-      rulesParser=new RulesParser(new Scanner(source));
-      var rules:Array=rulesParser.parse();
+      rulesParser = new RulesParser(new Scanner(source));
+      var rules:Array = rulesParser.parse();
       if (lSystem != null)
       {
         this.removeChild(lSystem);
       }
-      lSystem=new LSystem(axiom, rules, angle, order);
+      lSystem = new LSystem(axiom, rules, angle, order);
       this.addChild(lSystem);
       lSystem.draw(startX, startY, startAngle, lineThickness, lineLength, iterationSteps);
     }

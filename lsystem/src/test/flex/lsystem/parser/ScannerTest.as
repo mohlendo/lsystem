@@ -10,7 +10,7 @@ package lsystem.parser
     // Reference declaration for class to test
     private var scanner:Scanner;
 
-    public function ScannerTest(methodName:String=null)
+    public function ScannerTest(methodName:String = null)
     {
       super(methodName);
     }
@@ -27,18 +27,18 @@ package lsystem.parser
 
     public function testNextToken():void
     {
-      var source:String="X";
-      scanner=new Scanner(source);
-      var result:Token=scanner.nextToken();
+      var source:String = "X";
+      scanner = new Scanner(source);
+      var result:Token = scanner.nextToken();
       Assert.assertEquals("X", result.value);
 
-      source="X -> F";
-      scanner=new Scanner(source);
-      result=scanner.nextToken();
+      source = "X -> F";
+      scanner = new Scanner(source);
+      result = scanner.nextToken();
       Assert.assertEquals("X", result.value);
-      result=scanner.nextToken();
+      result = scanner.nextToken();
       Assert.assertEquals("->", result.value);
-      result=scanner.nextToken();
+      result = scanner.nextToken();
       Assert.assertEquals("F", result.value);
     }
   }
