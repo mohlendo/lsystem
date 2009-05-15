@@ -10,9 +10,9 @@
            For panel, border and title backround are skinned, but the content area and title text are not. */
         static private const exclusions:Array = ["background", "contentGroup"];
 
-	/** 
-	 * @copy spark.skins.SparkSkin#colorizeExclusions
-	 */		
+      	/** 
+      	 * @copy spark.skins.SparkSkin#colorizeExclusions
+      	 */		
         override public function get colorizeExclusions():Array {return exclusions;}
         
         /* Define the content fill items that should be colored by the "contentBackgroundColor" style. */
@@ -23,14 +23,15 @@
          */
         override public function get contentItems():Array {return contentFill};
         
-      protected function openClose_clickHandler(event:MouseEvent):void
-      {
-        if(currentState == "normal") {
-          this.currentState = "collapsed";
-        } else {
-          this.currentState = "normal";
+                
+        protected function openClose_clickHandler(event:MouseEvent):void
+        {
+          if(currentState == "normal") {
+            this.currentState = "collapsed";
+          } else {
+            this.currentState = "normal";
+          }
         }
-      }
     ]]>
   </fx:Script>
 
@@ -48,34 +49,63 @@
   </s:states>
 
   <s:transitions>
-    <mx:Transition fromState="normal" toState="collapsed">
+    <mx:Transition fromState="normal"
+                   toState="collapsed">
       <mx:Parallel>
-        <s:Fade targets="{ [shadow, border, background, contentGroup] }" alphaFrom="1" alphaTo="0" duration="250"/>
-        <s:Resize targets="{ [hostComponent,] }" widthFrom="{hostComponent.width}" widthTo="30" duration="250"/>
+        <s:Fade targets="{ [shadow, border, background, contentGroup] }"
+                alphaFrom="1"
+                alphaTo="0"
+                duration="250"/>
+        <s:Resize targets="{ [hostComponent,] }"
+                  widthFrom="{hostComponent.width}"
+                  widthTo="30"
+                  duration="250"/>
       </mx:Parallel>
     </mx:Transition>
-    <mx:Transition fromState="collapsed" toState="normal">
+    <mx:Transition fromState="collapsed"
+                   toState="normal">
       <mx:Parallel>
-        <s:Resize targets="{ [hostComponent] }" widthFrom="30" widthTo="300" duration="250"/>
-        <s:Fade targets="{ [shadow, border, background, contentGroup] }" alphaFrom="0" alphaTo="1" duration="250"/>
+        <s:Resize targets="{ [hostComponent] }"
+                  widthFrom="30"
+                  widthTo="300"
+                  duration="250"/>
+        <s:Fade targets="{ [shadow, border, background, contentGroup] }"
+                alphaFrom="0"
+                alphaTo="1"
+                duration="250"/>
       </mx:Parallel>
     </mx:Transition>
   </s:transitions>
 
   <!-- drop shadow -->
-  <s:Rect id="shadow" left="0" top="0" right="0" bottom="0">
+  <s:Rect id="shadow"
+          left="0"
+          top="0"
+          right="0"
+          bottom="0">
     <s:filters>
-      <s:DropShadowFilter blurX="20" blurY="20" alpha="0.32" distance="11" angle="90" knockout="true" />
+      <s:DropShadowFilter blurX="20"
+                          blurY="20"
+                          alpha="0.32"
+                          distance="11"
+                          angle="90"
+                          knockout="true"/>
     </s:filters>
     <s:fill>
-      <s:SolidColor color="0" />
+      <s:SolidColor color="0"/>
     </s:fill>
   </s:Rect>
 
   <!-- layer 1: border -->
-  <s:Rect id="border" left="0" right="0" top="0" bottom="0">
+  <s:Rect id="border"
+          left="0"
+          right="0"
+          top="0"
+          bottom="0">
     <s:stroke>
-      <s:SolidColorStroke color="0" alpha="0.50" weight="1" />
+      <s:SolidColorStroke color="0"
+                          alpha="0.50"
+                          weight="1"/>
     </s:stroke>
   </s:Rect>
 
@@ -86,14 +116,20 @@
           top="1"
           bottom="1">
     <s:fill>
-      <s:SolidColor color="0xFFFFFF" id="bgFill"/>
+      <s:SolidColor color="0xFFFFFF"
+                    id="bgFill"/>
     </s:fill>
   </s:Rect>
 
   <!---
        @copy spark.components.SkinnableContainer#skinpart:contentGroup
   -->
-  <s:ToggleButton id="collapseBtn" skinClass="skins.CollapseButtonSkin" click="openClose_clickHandler(event)" toolTip="Collapse" right="5" top="5"/>
+  <s:ToggleButton id="collapseBtn"
+                  skinClass="skins.CollapseButtonSkin"
+                  click="openClose_clickHandler(event)"
+                  toolTip="{collapseBtn.selected ? 'Open' : 'Collapse'}"
+                  right="5"
+                  top="5"/>
   <s:Group id="contentGroup"
            left="10"
            right="15"
