@@ -5,6 +5,6 @@ Lsystem is a ActionScript 3 Lindenmayer-system suntime. It is separated into two
 * lsystem-gui - the Flex 4 based interface for the runtime
 
 The interface can be seen here:
-(http://cloud.github.com/downloads/mohlendo/lsystem/main.swf)
+[Example](http://cloud.github.com/downloads/mohlendo/lsystem/main.swf)
 
 Copyright (c) 2009, Manuel Ohlendorf
