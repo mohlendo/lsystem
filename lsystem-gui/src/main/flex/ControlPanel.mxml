@@ -75,8 +75,7 @@ F -> FF
                          order="6"
                          axiom="F">
         <local:rules>
-          <fx:String>F -> F-F++F-F
-				</fx:String>
+          <fx:String>F -> F-F++F-F</fx:String>
         </local:rules>
       </local:LSystemData>
       <local:LSystemData name="Quad Koch island"
@@ -84,8 +83,7 @@ F -> FF
                          order="3"
                          axiom="F+F+F+F">
         <local:rules>
-          <fx:String>F -> F+F-F-FF+F+F-F
-				</fx:String>
+          <fx:String>F -> F+F-F-FF+F+F-F</fx:String>
         </local:rules>
       </local:LSystemData>
       <local:LSystemData name="Hilbert curve"
@@ -120,6 +118,26 @@ F -> FF
 				X -> X+YF+
 				Y -> -FX-Y
 				</fx:String>
+        </local:rules>
+      </local:LSystemData>
+      <local:LSystemData name="Lévy C curve"
+                         angle="45"
+                         order="12"
+                         axiom="F">
+        <local:rules>
+          <fx:String>F -> +F--F+</fx:String>
+        </local:rules>
+      </local:LSystemData>
+      <local:LSystemData name="Penrose Tiling P3"
+                         angle="36"
+                         order="6"
+                         axiom="[X]++[X]++[X]++[X]++[X]">
+        <local:rules>
+          <fx:String>W -> YF++ZF----XF[-YF----WF]++
+X -> +YF--ZF[---WF--XF]+
+Y -> -WF++XF[+++YF++ZF]-
+Z -> --YF++++WF[+ZF++++XF]--XF
+F -> F</fx:String>
         </local:rules>
       </local:LSystemData>
     </fx:Array>
@@ -168,6 +186,7 @@ F -> FF
                   width="75"/>
     <s:NumericStepper id="order"
                       width="55"
+                      maximum="20"
                       value="{presets.selectedItem.order}"
                       valueWrap="true"/>
   </s:HGroup>
